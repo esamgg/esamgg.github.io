@@ -3,83 +3,286 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#08080a">
+    <meta name="description" content="esam.gg">
     <link rel="icon" href="/assets/favicon-easa.png" type="image/png">
     <title>esam.gg</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
     <style>
+      :root {
+        --bg: #08080a;
+        --card: rgba(255, 255, 255, 0.028);
+        --card-hover: rgba(255, 255, 255, 0.05);
+        --line: rgba(255, 255, 255, 0.08);
+        --line-hover: rgba(255, 255, 255, 0.18);
+        --text: #ece9e6;
+        --muted: #8a8781;
+        --accent: #e8e5e0;
+        --radius: 16px;
+      }
+
       * { box-sizing: border-box; }
 
+      html { -webkit-text-size-adjust: 100%; }
+
       body {
-        background: #0a0a0a;
-        color: #eeeeee;
-        font-family: "SF Arabic", "Geeza Pro", Tahoma, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "IBM Plex Sans Arabic", "SF Arabic", "Geeza Pro", Tahoma, sans-serif;
+        font-weight: 300;
         margin: 0;
         min-height: 100vh;
         overflow-x: hidden;
-        overflow-y: auto;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        position: relative;
       }
 
-      header {
-        padding: 28px clamp(20px, 5vw, 64px);
+      /* layered ambient glow */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+          radial-gradient(900px 620px at 50% -10%, rgba(255, 255, 255, 0.05), transparent 65%),
+          radial-gradient(900px 700px at 50% 110%, rgba(255, 255, 255, 0.025), transparent 60%);
+      }
+
+      /* fine grain so the flat black doesn't band */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      .shell {
         position: relative;
         z-index: 2;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
-      header a {
-        color: #eeeeee;
+      /* ---------- header ---------- */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 26px clamp(20px, 5vw, 64px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text);
+        font-family: "Space Grotesk", system-ui, sans-serif;
         font-size: 14px;
-        font-weight: bold;
-        letter-spacing: 2px;
+        font-weight: 700;
+        letter-spacing: 3px;
         text-decoration: none;
+        direction: ltr;
+        transition: color .25s ease, opacity .25s ease;
       }
 
+      .brand:hover { color: #fff; }
+
+      .brand .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: .7;
+      }
+
+      .rule {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to left, transparent, var(--line), transparent);
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        padding: clamp(28px, 7vw, 72px) clamp(20px, 5vw, 64px) 8px;
+        max-width: 1180px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: clamp(30px, 6vw, 54px);
+        font-weight: 600;
+        line-height: 1.35;
+        margin: 0 0 14px;
+        letter-spacing: -0.5px;
+        color: #f2efeb;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: clamp(14px, 2.2vw, 17px);
+        line-height: 1.8;
+        margin: 0;
+        max-width: 46ch;
+      }
+
+      /* ---------- grid ---------- */
       main {
         display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+        gap: clamp(14px, 2vw, 22px);
+        grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
         margin: 0 auto;
-        max-width: 1200px;
-        padding: 40px clamp(20px, 5vw, 64px) 80px;
+        max-width: 1180px;
+        padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 64px) 96px;
         width: 100%;
       }
 
       .box {
-        background: #141414;
-        border: 1px solid #303030;
-        border-radius: 8px;
-        color: #dedede;
-        font-size: 18px;
-        line-height: 1.5;
-        min-height: 140px;
-        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        color: #ddd9d3;
+        font-size: clamp(16px, 1.9vw, 18px);
+        font-weight: 300;
+        line-height: 2;
+        min-height: 168px;
+        padding: 30px 28px;
         text-align: right;
-        width: 100%;
+        white-space: pre-line;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 40px -28px rgba(0, 0, 0, 0.9);
+        transition: transform .38s cubic-bezier(.22,.8,.3,1),
+                    border-color .38s ease,
+                    background .38s ease,
+                    box-shadow .38s ease;
+        animation: rise .7s cubic-bezier(.22,.8,.3,1) both;
+      }
+
+      /* soft sheen that follows the top edge */
+      .box::before {
+        content: "";
+        position: absolute;
+        inset: -1px -1px auto -1px;
+        height: 1px;
+        background: linear-gradient(to left, transparent, rgba(255,255,255,.28), transparent);
+        opacity: 0;
+        transition: opacity .38s ease;
+      }
+
+      .box:hover {
+        transform: translateY(-5px);
+        background: var(--card-hover);
+        border-color: var(--line-hover);
+        box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 30px 60px -32px rgba(0,0,0,1);
+      }
+
+      .box:hover::before { opacity: 1; }
+
+      /* decorative quote glyph */
+      .box:not(:empty)::after {
+        content: "”";
+        position: absolute;
+        top: 4px;
+        left: 20px;
+        font-family: Georgia, serif;
+        font-size: 64px;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.10);
+        pointer-events: none;
+        transition: color .38s ease;
+      }
+
+      .box:not(:empty):hover::after { color: rgba(255, 255, 255, 0.18); }
+
+      /* empty slots read as placeholders, not dead space */
+      .box:empty {
+        border-style: dashed;
+        border-color: rgba(255, 255, 255, 0.06);
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .box:empty:hover {
+        transform: none;
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .box:nth-child(1) { animation-delay: .05s; }
+      .box:nth-child(2) { animation-delay: .12s; }
+      .box:nth-child(3) { animation-delay: .19s; }
+      .box:nth-child(4) { animation-delay: .26s; }
+      .box:nth-child(5) { animation-delay: .33s; }
+      .box:nth-child(6) { animation-delay: .40s; }
+
+      /* ---------- footer ---------- */
+      footer {
+        margin-top: auto;
+        padding: 22px clamp(20px, 5vw, 64px) 34px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        font-size: 12px;
+        letter-spacing: 1.5px;
+        direction: ltr;
+        text-align: left;
       }
 
       @media (max-width: 650px) {
-        main {
-          grid-template-columns: 1fr;
-          padding-top: 20px;
+        main { grid-template-columns: 1fr; padding-bottom: 64px; }
+        .box { min-height: 0; padding: 24px 22px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
         }
       }
     </style>
   </head>
 
   <body>
-    <header>
-      <a href="/">ESAM.GG</a>
-    </header>
+    <div class="shell">
+      <header>
+        <a class="brand" href="/"><span class="dot"></span>esam.gg</a>
+        <span class="rule"></span>
+      </header>
 
-    <main>
-      <!-- Edit the text inside these boxes. Copy a box to add another one. -->
-      <div class="box"> يقال الغباء ليس السخف و الجهل الغباء هو ابتاع الجهال ، تسليم العقل لمصدر غير مؤهل و الرضى بعدم المعرفة </div>
-      <div class="box">ومـا نيل المطـالب بالتمني 	 ولكن تؤخذ الدنيا غلابا
-وما استعصى على قومٍ منالٌ 	إذا الإقدام كان لهم ركابا</div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-    </main>
+      <section class="hero">
+        <h1>كلمات</h1>
+      </section>
+
+      <main>
+        <!-- Edit the text inside these boxes. Copy a box to add another one. -->
+        <div class="box">يقال الغباء ليس السخف و الجهل الغباء هو ابتاع الجهال ، تسليم العقل لمصدر غير مؤهل و الرضى بعدم المعرفة</div>
+        <div class="box">ومـا نيل المطـالب بالتمني ولكن تؤخذ الدنيا غلابا
+وما استعصى على قومٍ منالٌ إذا الإقدام كان لهم ركابا</div>
+        <div class="box">آدم عليه السلام دعا الله عز وجل بشريك حياة وهو بجنةالتي فيها لا عين رأت ولا اذن سمعت </div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </main>
+
+      <footer>© ESAM.GG</footer>
+    </div>
   </body>
 </html>
