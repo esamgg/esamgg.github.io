@@ -1,34 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0a0a">
     <title>esam.gg</title>
-    <style>
-      :root { color-scheme: dark; }
 
+    <style>
       * { box-sizing: border-box; }
 
       body {
-        align-items: center;
-        background: #111111;
-        color: #f5f5f5;
-        display: flex;
-        font-family: system-ui, sans-serif;
-        justify-content: center;
+        background: #0a0a0a;
+        color: #eeeeee;
+        font-family: "SF Arabic", "Geeza Pro", Tahoma, Arial, sans-serif;
         margin: 0;
         min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
-      h1 {
-        font-size: clamp(3rem, 14vw, 10rem);
-        font-weight: 700;
-        letter-spacing: -0.07em;
-        margin: 0 0 0 -0.07em;
+      header {
+        padding: 28px clamp(20px, 5vw, 64px);
+        position: relative;
+        z-index: 2;
+      }
+
+      header a {
+        color: #eeeeee;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-decoration: none;
+      }
+
+      main {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 40px clamp(20px, 5vw, 64px) 80px;
+        width: 100%;
+      }
+
+      .box {
+        background: #141414;
+        border: 1px solid #303030;
+        border-radius: 8px;
+        color: #dedede;
+        font-size: 18px;
+        line-height: 1.5;
+        min-height: 140px;
+        padding: 24px;
+        text-align: right;
+        width: 100%;
+      }
+
+      @media (max-width: 650px) {
+        main {
+          grid-template-columns: 1fr;
+          padding-top: 20px;
+        }
       }
     </style>
   </head>
+
   <body>
-    <h1>esam.gg</h1>
+    <header>
+      <a href="/">ESAM.GG</a>
+    </header>
+
+    <main>
+      <!-- Edit the text inside these boxes. Copy a box to add another one. -->
+      <div class="box">الغباء ليس السخف و الجهل الغباء هو ابتاع الجهال ، تسليم العقل لمصدر غير مؤهل و الرضى بعدم المعرفة </div>
+      <div class="box">ومـا نيل المطـالب بالتمني 	 ولكن تؤخذ الدنيا غلابا
+وما استعصى على قومٍ منالٌ 	إذا الإقدام كان لهم ركابا</div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </main>
   </body>
 </html>
