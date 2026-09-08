@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="esam.gg">
+  <rect x="0" y="0" width="64" height="64" rx="15" fill="#08080a"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="14.25" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.5"/>
+  <g fill="none" stroke="#ece9e6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 47 34 A 15 15 0 1 0 42.6 44.6"/>
+    <path d="M 17 34 L 47 34"/>
+  </g>
+  <circle cx="50" cy="14" r="4.5" fill="#e8e5e0"/>
+</svg>
