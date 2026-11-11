@@ -70,73 +70,23 @@
       .shell {
         position: relative;
         z-index: 2;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-
-      /* ---------- header ---------- */
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 26px clamp(20px, 5vw, 64px);
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text);
-        font-family: "Space Grotesk", system-ui, sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 3px;
-        text-decoration: none;
-        direction: ltr;
-        transition: color .25s ease, opacity .25s ease;
-      }
-
-      .brand:hover { color: #fff; }
-
-      .brand .dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--accent);
-        opacity: .7;
-      }
-
-      .rule {
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(to left, transparent, var(--line), transparent);
       }
 
       /* ---------- hero ---------- */
       .hero {
-        padding: clamp(28px, 7vw, 72px) clamp(20px, 5vw, 64px) 8px;
-        max-width: 1180px;
-        width: 100%;
         margin: 0 auto;
+        max-width: 1180px;
+        padding: clamp(48px, 9vw, 104px) clamp(20px, 5vw, 64px) 4px;
+        width: 100%;
       }
 
       .hero h1 {
+        color: #f2efeb;
         font-size: clamp(30px, 6vw, 54px);
         font-weight: 600;
-        line-height: 1.35;
-        margin: 0 0 14px;
         letter-spacing: -0.5px;
-        color: #f2efeb;
-      }
-
-      .hero p {
-        color: var(--muted);
-        font-size: clamp(14px, 2.2vw, 17px);
-        line-height: 1.8;
+        line-height: 1.35;
         margin: 0;
-        max-width: 46ch;
       }
 
       /* ---------- grid ---------- */
@@ -228,26 +178,6 @@
         to   { opacity: 1; transform: translateY(0); }
       }
 
-      .box:nth-child(1) { animation-delay: .05s; }
-      .box:nth-child(2) { animation-delay: .12s; }
-      .box:nth-child(3) { animation-delay: .19s; }
-      .box:nth-child(4) { animation-delay: .26s; }
-      .box:nth-child(5) { animation-delay: .33s; }
-      .box:nth-child(6) { animation-delay: .40s; }
-
-      /* ---------- footer ---------- */
-      footer {
-        margin-top: auto;
-        padding: 22px clamp(20px, 5vw, 64px) 34px;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        color: var(--muted);
-        font-family: "Space Grotesk", system-ui, sans-serif;
-        font-size: 12px;
-        letter-spacing: 1.5px;
-        direction: ltr;
-        text-align: left;
-      }
-
       @media (max-width: 650px) {
         main { grid-template-columns: 1fr; padding-bottom: 64px; }
         .box { min-height: 0; padding: 24px 22px; }
@@ -264,11 +194,6 @@
 
   <body>
     <div class="shell">
-      <header>
-        <a class="brand" href="/"><span class="dot"></span>esam.gg</a>
-        <span class="rule"></span>
-      </header>
-
       <section class="hero">
         <h1>كلمات</h1>
       </section>
@@ -289,8 +214,6 @@
         <div class="box">استنتاج الأفكار المعقدة علميا يلزم إخضاعها للنقد والتمحيص عبر الأدوات والمعايير المتفق عليها بين المسلمين</div>
         <div class="box">تتقارب الديمقراطية مع الشيوعية حين تنضج وتؤول إلى حكم النخبة</div>
       </main>
-
-      <footer>© ESAM.GG</footer>
     </div>
   </body>
 </html>
