@@ -4,15 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#08080a">
-    <meta name="description" content="esam.gg">
+    <meta name="description" content="كلمات: أفكار واقتباسات وأبيات أعود إليها.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://esam.gg/">
+    <meta property="og:locale" content="ar_AR">
+    <meta property="og:title" content="كلمات">
+    <meta property="og:description" content="أفكار واقتباسات وأبيات أعود إليها.">
+    <meta property="og:image" content="https://esam.gg/assets/favicon-180.png">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://esam.gg/">
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="/assets/favicon-180.png">
-    <title>esam.gg</title>
+    <title>كلمات · esam.gg</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;600&display=swap" rel="stylesheet">
 
     <style>
       :root {
@@ -23,8 +31,8 @@
         --line-hover: rgba(255, 255, 255, 0.18);
         --text: #ece9e6;
         --muted: #8a8781;
-        --accent: #e8e5e0;
         --radius: 16px;
+        --gap: clamp(14px, 2vw, 22px);
       }
 
       * { box-sizing: border-box; }
@@ -89,16 +97,33 @@
         margin: 0;
       }
 
-      /* ---------- grid ---------- */
+      /* ---------- columns: each box keeps its own height ---------- */
       main {
         display: grid;
-        gap: clamp(14px, 2vw, 22px);
+        align-items: start;
+        gap: var(--gap);
         grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
         margin: 0 auto;
         max-width: 1180px;
         padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 64px) 96px;
         width: 100%;
       }
+
+      /* the script below sorts the boxes into these columns */
+      main.cols {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .col {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        gap: var(--gap);
+        min-width: 0;
+      }
+
+      main.ready .box { animation: none; }
 
       .box {
         position: relative;
@@ -107,17 +132,15 @@
         border: 1px solid var(--line);
         border-radius: var(--radius);
         color: #ddd9d3;
+        cursor: pointer;
         font-size: clamp(16px, 1.9vw, 18px);
         font-weight: 300;
         line-height: 2;
-        min-height: 168px;
         padding: 30px 28px;
         text-align: right;
         white-space: pre-line;
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
         box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 40px -28px rgba(0, 0, 0, 0.9);
-        transition: transform .38s cubic-bezier(.22,.8,.3,1),
+        transition: transform .15s ease,
                     border-color .38s ease,
                     background .38s ease,
                     box-shadow .38s ease;
@@ -135,14 +158,18 @@
         transition: opacity .38s ease;
       }
 
-      .box:hover {
-        transform: translateY(-5px);
+      .box:hover,
+      .box:focus-visible {
         background: var(--card-hover);
         border-color: var(--line-hover);
         box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 30px 60px -32px rgba(0,0,0,1);
+        outline: none;
       }
 
-      .box:hover::before { opacity: 1; }
+      .box:hover::before,
+      .box:focus-visible::before { opacity: 1; }
+
+      .box:not(:empty):active { transform: scale(.985); }
 
       /* decorative quote glyph */
       .box:not(:empty)::after {
@@ -160,16 +187,42 @@
 
       .box:not(:empty):hover::after { color: rgba(255, 255, 255, 0.18); }
 
+      /* after a click the glyph briefly says "copied" */
+      .box.copied:not(:empty)::after {
+        content: "نُسخ";
+        top: 9px;
+        font-family: inherit;
+        font-size: 12px;
+        line-height: 1.4;
+        color: var(--muted);
+      }
+
+      /* poetry: add class "verse" to the box */
+      .box.verse {
+        line-height: 2.2;
+        text-align: center;
+      }
+
+      /* source: <span class="src">name</span> at the end of a box */
+      .src {
+        display: block;
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
       /* empty slots read as placeholders, not dead space */
       .box:empty {
+        min-height: 96px;
         border-style: dashed;
         border-color: rgba(255, 255, 255, 0.06);
         background: transparent;
         box-shadow: none;
+        cursor: default;
       }
 
       .box:empty:hover {
-        transform: none;
         border-color: rgba(255, 255, 255, 0.12);
       }
 
@@ -179,8 +232,8 @@
       }
 
       @media (max-width: 650px) {
-        main { grid-template-columns: 1fr; padding-bottom: 64px; }
-        .box { min-height: 0; padding: 24px 22px; }
+        main { padding-bottom: 64px; }
+        .box { padding: 24px 22px; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -199,10 +252,16 @@
       </section>
 
       <main>
-        <!-- Edit the text inside these boxes. Copy a box to add another one. -->
+        <!--
+          Add a new box at the BOTTOM of this list. The page shows the newest first.
+          Poetry:  <div class="box verse">  with one half-line per line.
+          Source:  put <span class="src">name</span> right before </div>.
+        -->
         <div class="box">يقال الغباء ليس السخف والجهل الغباء هو اتباع الجهال، تسليم العقل لمصدر غير مؤهل والرضى بعدم المعرفة</div>
-        <div class="box">ومـا نيل المطـالب بالتمني ولكن تؤخذ الدنيا غلابا
-وما استعصى على قومٍ منالٌ إذا الإقدام كان لهم ركابا</div>
+        <div class="box verse">ومـا نيل المطـالب بالتمني
+ولكن تؤخذ الدنيا غلابا
+وما استعصى على قومٍ منالٌ
+إذا الإقدام كان لهم ركابا<span class="src">أحمد شوقي</span></div>
         <div class="box">آدم عليه السلام دعا الله عز وجل بشريك حياة وهو بالجنة التي فيها لا عين رأت ولا أذن سمعت</div>
         <div class="box">في بعض الحالات المجتمع يصنف بعض العادات أمراض نفسية لأنها تخالف طباعهم وعاداتهم</div>
         <div class="box">القدرة على الحوار العلمي ما تأتي بدون جهد</div>
@@ -216,5 +275,65 @@
         <div class="box"> تروج الأفكار الفلسفية بين المسلمين لأنها تؤخذ ترفاً ذهنياً لا يُلزم صاحبه بعمل شاق، أما العلوم الشرعية فتربط العلم بالعمل بالمكاره. </div>
       </main>
     </div>
+
+    <script>
+      (function () {
+        var main = document.querySelector('main');
+        var boxes = Array.prototype.slice.call(main.querySelectorAll('.box'));
+        var filled = boxes.filter(function (b) { return b.textContent.trim(); });
+        var empty = boxes.filter(function (b) { return !b.textContent.trim(); });
+
+        // newest first: the last box in the file is shown first
+        var order = filled.slice().reverse().concat(empty);
+        var count = 0;
+
+        // deal the boxes across 1, 2 or 3 columns, row by row
+        function layout() {
+          var w = main.clientWidth;
+          var n = w >= 1000 ? 3 : w >= 680 ? 2 : 1;
+          if (n === count) return;
+          count = n;
+          var cols = [];
+          for (var i = 0; i < n; i++) {
+            cols[i] = document.createElement('div');
+            cols[i].className = 'col';
+          }
+          order.forEach(function (b, i) { cols[i % n].appendChild(b); });
+          main.textContent = '';
+          cols.forEach(function (c) { main.appendChild(c); });
+          main.classList.add('cols');
+        }
+
+        layout();
+        window.addEventListener('resize', layout);
+        // the fade-in plays once, not again when the columns are rebuilt
+        setTimeout(function () { main.classList.add('ready'); }, 900);
+
+        // click (or Enter) copies the quote, with its source if it has one
+        function copy(box) {
+          if (!navigator.clipboard) return;
+          if (String(window.getSelection())) return; // the reader is selecting text
+          var clone = box.cloneNode(true);
+          var src = clone.querySelector('.src');
+          var from = '';
+          if (src) { from = src.textContent.trim(); src.remove(); }
+          var text = clone.textContent.trim() + (from ? '\n— ' + from : '');
+          navigator.clipboard.writeText(text).then(function () {
+            box.classList.add('copied');
+            setTimeout(function () { box.classList.remove('copied'); }, 1400);
+          }, function () {});
+        }
+
+        filled.forEach(function (box) {
+          box.tabIndex = 0;
+          box.setAttribute('role', 'button');
+          box.setAttribute('aria-label', 'نسخ');
+          box.addEventListener('click', function () { copy(box); });
+          box.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') copy(box);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
