@@ -52,7 +52,6 @@
         position: relative;
       }
 
-      /* layered ambient glow */
       body::before {
         content: "";
         position: fixed;
@@ -64,7 +63,6 @@
           radial-gradient(900px 700px at 50% 110%, rgba(255, 255, 255, 0.025), transparent 60%);
       }
 
-      /* fine grain so the flat black doesn't band */
       body::after {
         content: "";
         position: fixed;
@@ -80,7 +78,6 @@
         z-index: 2;
       }
 
-      /* ---------- hero ---------- */
       .hero {
         margin: 0 auto;
         max-width: 1180px;
@@ -113,7 +110,6 @@
         outline: none;
       }
 
-      /* ---------- columns: each box keeps its own height ---------- */
       main {
         display: grid;
         align-items: start;
@@ -125,7 +121,6 @@
         width: 100%;
       }
 
-      /* the script below sorts the boxes into these columns */
       main.cols {
         display: flex;
         align-items: flex-start;
@@ -163,7 +158,6 @@
         animation: rise .7s cubic-bezier(.22,.8,.3,1) both;
       }
 
-      /* soft sheen that follows the top edge */
       .box::before {
         content: "";
         position: absolute;
@@ -187,7 +181,6 @@
 
       .box:not(:empty):active { transform: scale(.985); }
 
-      /* decorative quote glyph */
       .box:not(:empty)::after {
         content: "”";
         position: absolute;
@@ -203,7 +196,6 @@
 
       .box:not(:empty):hover::after { color: rgba(255, 255, 255, 0.18); }
 
-      /* after a click the glyph briefly says "copied" */
       .box.copied:not(:empty)::after {
         content: "نُسخ";
         top: 9px;
@@ -213,13 +205,11 @@
         color: var(--muted);
       }
 
-      /* poetry: add class "verse" to the box */
       .box.verse {
         line-height: 2.2;
         text-align: center;
       }
 
-      /* source: <span class="src">name</span> at the end of a box */
       .src {
         display: block;
         margin-top: 14px;
@@ -228,7 +218,6 @@
         line-height: 1.6;
       }
 
-      /* empty slots read as placeholders, not dead space */
       .box:empty {
         min-height: 96px;
         border-style: dashed;
@@ -269,11 +258,6 @@
       </section>
 
       <main>
-        <!--
-          Add a new box at the BOTTOM of this list. The page shows the newest first.
-          Poetry:  <div class="box verse">  with one half-line per line.
-          Source:  put <span class="src">name</span> right before </div>.
-        -->
         <div class="box">يقال الغباء ليس السخف والجهل الغباء هو اتباع الجهال، تسليم العقل لمصدر غير مؤهل والرضى بعدم المعرفة</div>
         <div class="box verse">ومـا نيل المطـالب بالتمني
 ولكن تؤخذ الدنيا غلابا
@@ -300,11 +284,9 @@
         var filled = boxes.filter(function (b) { return b.textContent.trim(); });
         var empty = boxes.filter(function (b) { return !b.textContent.trim(); });
 
-        // newest first: the last box in the file is shown first
         var order = filled.slice().reverse().concat(empty);
         var count = 0;
 
-        // deal the boxes across 1, 2 or 3 columns, row by row
         function layout() {
           var w = main.clientWidth;
           var n = w >= 1000 ? 3 : w >= 680 ? 2 : 1;
@@ -323,13 +305,11 @@
 
         layout();
         window.addEventListener('resize', layout);
-        // the fade-in plays once, not again when the columns are rebuilt
         setTimeout(function () { main.classList.add('ready'); }, 900);
 
-        // click (or Enter) copies the quote, with its source if it has one
         function copy(box) {
           if (!navigator.clipboard) return;
-          if (String(window.getSelection())) return; // the reader is selecting text
+          if (String(window.getSelection())) return;
           var clone = box.cloneNode(true);
           var src = clone.querySelector('.src');
           var from = '';
